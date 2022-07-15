@@ -10,17 +10,22 @@ class Wrappost extends React.Component {
       email: "",
       phone: "",
       checkedPos: "",
-      users:[]
+      users: [],
+      nextlink: "",
+      defoultUrl:
+        "https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUserChecked = this.handleUserChecked.bind(this);
+    this.showMoreUs = this.showMoreUs.bind(this);
   }
   componentDidMount() {
-    apiapp.getUsers().then((res) => {
+    apiapp.getUsers(this.state.defoultUrl).then((res) => {
       const users = res.data.users;
-      this.setState({ users });
+      const nextlink = res.data.links.next_url;
+      this.setState({ users, nextlink });
     });
   }
 
@@ -43,10 +48,11 @@ class Wrappost extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    apiapp.getUsers().then((res) => {
+    apiapp.getUsers(this.state.defoultUrl).then((res) => {
       const users = res.data.users;
       this.setState({ users });
     });
+
     let formData = new FormData();
     let fileField = document.querySelector('input[type="file"]');
     formData.append("position_id", this.state.checkedPos);
@@ -58,10 +64,25 @@ class Wrappost extends React.Component {
     apiapp.postUser(formData, this.props.token);
   }
 
+  showMoreUs() {
+    apiapp.getUsers(this.state.nextlink).then((res) => {
+      const users = res.data.users;
+      const nextlink = res.data.links.next_url;
+      this.setState({ users, nextlink });
+      if (nextlink === undefined || nextlink === null) {
+        document.getElementById("showMoreUs").style.display = "none";
+      }
+    });
+  }
+
   render() {
     return (
       <>
         <Wrapget users={this.state.users} />
+        <button id="showMoreUs" onClick={this.showMoreUs}>
+          Show more
+        </button>
+
         <h2>Working with POST request</h2>
         <form className="postRequest" onSubmit={this.handleSubmit}>
           <input
