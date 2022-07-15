@@ -3,6 +3,7 @@ import Wrapget from "./Wrapget";
 import { apiapp } from "../API/api";
 
 class Wrappost extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,8 +13,7 @@ class Wrappost extends React.Component {
       checkedPos: "",
       users: [],
       nextlink: "",
-      defoultUrl:
-        "https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6",
+      defoultUrl:"https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,6 +21,7 @@ class Wrappost extends React.Component {
     this.handleUserChecked = this.handleUserChecked.bind(this);
     this.showMoreUs = this.showMoreUs.bind(this);
   }
+
   componentDidMount() {
     apiapp.getUsers(this.state.defoultUrl).then((res) => {
       const users = res.data.users;
@@ -48,10 +49,6 @@ class Wrappost extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    apiapp.getUsers(this.state.defoultUrl).then((res) => {
-      const users = res.data.users;
-      this.setState({ users });
-    });
 
     let formData = new FormData();
     let fileField = document.querySelector('input[type="file"]');
@@ -61,7 +58,22 @@ class Wrappost extends React.Component {
     formData.append("phone", this.state.phone);
     formData.append("photo", fileField.files[0]);
 
-    apiapp.postUser(formData, this.props.token);
+    apiapp.postUser(formData, this.props.token).then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      if (data.success) {
+        console.log("УОААААА");
+      } else {
+      }
+    })
+    .catch(function (error) {});
+
+    apiapp.getUsers(this.state.defoultUrl).then((res) => {
+      const users = res.data.users;
+      this.setState({ users });
+    });
   }
 
   showMoreUs() {
@@ -69,7 +81,8 @@ class Wrappost extends React.Component {
       const users = res.data.users;
       const nextlink = res.data.links.next_url;
       this.setState({ users, nextlink });
-      if (nextlink === undefined || nextlink === null) {
+
+      if (nextlink === null) {
         document.getElementById("showMoreUs").style.display = "none";
       }
     });
