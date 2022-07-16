@@ -17,11 +17,12 @@ export const apiapp = {
     );
   },
 
-  postUser(formData, token) {
-    return fetch(
+  async postUser(formData, token) {
+    return await fetch(
       "https://frontend-test-assignment-api.abz.agency/api/v1/users",
       { method: "POST", body: formData, headers: { Token: token } }
-    )
-      
+    ).then( (response)=> {
+      return response.json();
+    });
   },
 };

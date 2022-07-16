@@ -1,7 +1,9 @@
 import React from "react";
 import Wrappost from "./components/Wrappost";
 import Header from "./components/Header";
+import Mainscreen from "./components/Mainscreen";
 import { apiapp } from "./API/api";
+import "./style/app.scss";
 
 class App extends React.Component {
   constructor(props) {
@@ -26,6 +28,7 @@ class App extends React.Component {
     return (
       <>
         <Header />
+        <Mainscreen/>
         <Wrappost positions={this.state.positions} token={this.state.token} />
       </>
     );

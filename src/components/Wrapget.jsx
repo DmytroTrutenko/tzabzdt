@@ -5,7 +5,6 @@ class Wrapget extends React.Component {
   render() {
     return (
       <>
-        <div>
           {this.props.users.map((u) => (
             <User
               key={u.id}
@@ -16,7 +15,6 @@ class Wrapget extends React.Component {
               position={u.position}
             />
           ))}
-        </div>
       </>
     );
   }
