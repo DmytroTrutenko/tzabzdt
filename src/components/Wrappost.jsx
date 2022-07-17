@@ -86,23 +86,39 @@ class Wrappost extends React.Component {
 
   validatePhoto() {
     const img = document.getElementById("file").files[0];
+    const fileNameField = document.getElementById("file-name");
+    const errorSpan = document.getElementById("error_text");
+    const upload = document.getElementById("upload");
+    const label = document.getElementById("label");
+    let valueForm = document.getElementById("file").value;
+
+    fileNameField.placeholder = img.name;
+
     const imgUrl = URL.createObjectURL(img);
     const imgObj = new Image();
     imgObj.src = imgUrl;
     imgObj.onload = () => {
       if (imgObj.width < 70 && imgObj.height < 70) {
-        console.log("The photo is small");
-        document.getElementById("file").value = "";
+        upload.classList.add("error");
+
+        errorSpan.classList.add("error");
+        errorSpan.textContent = "The photo is small";
+        valueForm = "";
         return;
       }
       if (img.size > 5242880) {
-        console.log("The photo may not be greater than 5 Mbytes.");
-        document.getElementById("file").value = "";
+        upload.classList.add("error");
+
+        errorSpan.classList.add("error");
+        errorSpan.textContent = "The photo may not be greater than 5 Mbytes.";
+        valueForm = "";
         return;
       }
       if (img.type !== "image/jpeg") {
-        console.log("The photo format must be jpeg/jpg type");
-        document.getElementById("file").value = "";
+        upload.classList.add("error");
+        errorSpan.classList.add("error");
+        errorSpan.textContent = "The photo format must be jpeg/jpg type";
+        valueForm = "";
         return;
       }
     };
@@ -117,7 +133,11 @@ class Wrappost extends React.Component {
             <div className="users d-flex">
               <Wrapget users={this.state.users} />
             </div>
-            <button className="btn showMoreUs" id="showMoreUs" onClick={this.showMoreUs}>
+            <button
+              className="btn showMoreUs"
+              id="showMoreUs"
+              onClick={this.showMoreUs}
+            >
               Show more
             </button>
 
@@ -186,21 +206,30 @@ class Wrappost extends React.Component {
                   </ul>
                 </div>
 
-                <div className="upload d-flex">
-                  <label htmlFor="file">Upload</label>
+                <div id="upload" className="upload d-flex">
                   <input
                     required
                     type="file"
                     id="file"
                     name="file"
-                    accept=".jpg, .jpeg"
                     onChange={this.validatePhoto}
                   />
-                  <textarea readOnly placeholder="Upload your photo"></textarea>
+                  <label id="label" htmlFor="file">
+                    Upload
+                  </label>
+                  <input
+                    readOnly
+                    id="file-name"
+                    placeholder="Upload your photo"
+                    className="choisefile"
+                  ></input>
                 </div>
+                <span id="error_text" className="error_text"></span>
 
                 <div>
-                  <button className="btn" type="submit">Sign up</button>
+                  <button className="btn" type="submit">
+                    Sign up
+                  </button>
                 </div>
               </div>
             </form>
