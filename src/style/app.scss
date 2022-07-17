@@ -252,6 +252,13 @@ h2 {
 
         li {
             margin-bottom: 7px;
+            text-align: left;
+
+            >label {
+                border: none;
+                width: auto;
+                display: inline-block;
+            }
         }
     }
 

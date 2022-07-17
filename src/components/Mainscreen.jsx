@@ -15,7 +15,7 @@ class Mainscreen extends React.Component {
                 accessibility in mind. They should also be excited to learn, as
                 the world of Front-End Development keeps evolving.
               </p>
-              <a href="#" className="btn">
+              <a href="#formpost" className="btn">
                 Sign up
               </a>
             </div>

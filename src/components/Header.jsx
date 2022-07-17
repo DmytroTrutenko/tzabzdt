@@ -12,10 +12,10 @@ class Header extends React.Component {
             </a>
             <ul className="header_nav d-flex">
               <li>
-                <a href="#" className="btn">Users</a>
+                <a href="#users" className="btn">Users</a>
               </li>
               <li>
-                <a href="#" className="btn">Sign up</a>
+                <a href="#formpost" className="btn">Sign up</a>
               </li>
             </ul>
           </div>

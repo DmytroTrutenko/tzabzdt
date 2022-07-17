@@ -130,7 +130,7 @@ class Wrappost extends React.Component {
         <div className="layout">
           <div className="request_inner">
             <h2>Working with GET request</h2>
-            <div className="users d-flex">
+            <div id="users" className="users d-flex">
               <Wrapget users={this.state.users} />
             </div>
             <button
@@ -194,13 +194,16 @@ class Wrappost extends React.Component {
                   >
                     {this.props.positions.map((pos) => (
                       <li key={pos.id}>
-                        <input
-                          required
-                          type="radio"
-                          name="position"
-                          value={pos.id}
-                        />
-                        {pos.name}
+                        <label>
+                          <input
+                            required
+                            type="radio"
+                            name="position"
+                            value={pos.id}
+                          />
+                          {pos.name}
+                        </label>
+                        
                       </li>
                     ))}
                   </ul>
