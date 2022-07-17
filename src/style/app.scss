@@ -46,8 +46,6 @@ p {
 }
 
 h2 {
-    font-family: 'Nunito';
-    font-style: normal;
     font-weight: 400;
     font-size: 40px;
     line-height: 40px;
@@ -273,9 +271,6 @@ h2 {
         }
 
         &_text {
-            font-family: 'Nunito';
-            font-style: normal;
-            font-weight: 400;
             font-size: 12px;
             line-height: 14px;
             color: #CB3D40;
@@ -318,9 +313,6 @@ label {
     border: 1px solid rgba(0, 0, 0, 0.87);
     border-radius: 4px 0px 0px 4px;
     width: 83px;
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 400;
     font-size: 16px;
     line-height: 26px;
     cursor: pointer;
