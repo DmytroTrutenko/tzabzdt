@@ -24,6 +24,7 @@ class Wrappost extends React.Component {
     this.validatePhoto = this.validatePhoto.bind(this);
   }
 
+  //updating received users with API
   refreshPage(url) {
     apiapp.getUsers(url).then((res) => {
       const users = res.data.users;
@@ -34,11 +35,11 @@ class Wrappost extends React.Component {
       }
     });
   }
-
+  //When the page is rendered, update the users
   componentDidMount() {
     this.refreshPage(this.state.defoultUrl);
   }
-
+  //Get the data from the form and push it into the state
   handleChange(e) {
     let name = e.target.name,
       email = e.target.email,
@@ -51,11 +52,11 @@ class Wrappost extends React.Component {
       [phone]: value,
     });
   }
-
+  //Get the checked position and push it into the state
   handleUserChecked(e) {
     this.setState({ checkedPos: e.target.value });
   }
-
+  //Create an object from the form data and send a post request
   handleSubmit(e) {
     e.preventDefault();
 
@@ -75,15 +76,16 @@ class Wrappost extends React.Component {
       .catch((error) => {
         console.log("error" + error);
       });
-
+    //Clean the form
     this.setState({ name: "", email: "", phone: "", checkedPos: "" });
     document.getElementById("formpost").reset();
   }
-
+  //get users with the API from the next page
   showMoreUs() {
     this.refreshPage(this.state.nextlink);
   }
 
+  //check the uploaded picture and display an error message
   validatePhoto() {
     const img = document.getElementById("file").files[0];
     const fileNameField = document.getElementById("file-name");
@@ -110,7 +112,6 @@ class Wrappost extends React.Component {
       }
       if (img.size > 5242880) {
         upload.classList.add("error");
-
         errorSpan.classList.add("error");
         errorSpan.textContent = "The photo may not be greater than 5 Mbytes.";
         valueForm = "";

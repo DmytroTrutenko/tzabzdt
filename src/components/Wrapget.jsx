@@ -4,7 +4,8 @@ import User from "./User";
 class Wrapget extends React.Component {
   render() {
     return (
-      <>
+      //use the map function to fill in the user data
+      <>  
           {this.props.users.map((u) => (
             <User
               key={u.id}

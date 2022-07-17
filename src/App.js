@@ -14,10 +14,12 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
+    //get the positions for the radio buttons
     apiapp.getPos().then((res) => {
       const positions = res.data.positions;
       this.setState({ positions });
     });
+    // get the token that is required to register a new user
     apiapp.getToken().then((res) => {
       const token = res.data.token;
       this.setState({ token });
@@ -28,7 +30,7 @@ class App extends React.Component {
     return (
       <>
         <Header />
-        <Mainscreen/>
+        <Mainscreen />
         <Wrappost positions={this.state.positions} token={this.state.token} />
       </>
     );
