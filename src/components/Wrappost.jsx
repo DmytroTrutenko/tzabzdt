@@ -98,9 +98,11 @@ class Wrappost extends React.Component {
     const imgObj = new Image();
     imgObj.src = imgUrl;
     imgObj.onload = () => {
+      errorSpan.classList.remove("error");
+      upload.classList.remove("error");
+      errorSpan.textContent = "";
       if (imgObj.width < 70 && imgObj.height < 70) {
         upload.classList.add("error");
-
         errorSpan.classList.add("error");
         errorSpan.textContent = "The photo is small";
         valueForm = "";
@@ -203,7 +205,6 @@ class Wrappost extends React.Component {
                           />
                           {pos.name}
                         </label>
-                        
                       </li>
                     ))}
                   </ul>
