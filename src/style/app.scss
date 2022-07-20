@@ -186,12 +186,16 @@ h2 {
         display: block;
         min-height: 52px;
     }
+   
 
     p {
-        width: 100%;
-        word-wrap: break-word;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
     }
+    
 }
+
 
 .users {
     flex-wrap: wrap;
@@ -324,6 +328,9 @@ label {
     text-align: center;
     margin: -1px;
 }
+
+
+
 
 
 @media screen and (max-width: 1024px) {

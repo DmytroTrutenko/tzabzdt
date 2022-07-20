@@ -1,6 +1,7 @@
 import React from "react";
 import Wrapget from "./Wrapget";
 import { apiapp } from "../API/api";
+import photosvg from "../assets/photo.svg";
 
 class Wrappost extends React.Component {
   constructor(props) {
@@ -26,15 +27,26 @@ class Wrappost extends React.Component {
 
   //updating received users with API
   refreshPage(url) {
-    apiapp.getUsers(url).then((res) => {
-      const users = res.data.users;
-      const nextlink = res.data.links.next_url;
-      this.setState({ users, nextlink });
-      if (nextlink === null) {
-        document.getElementById("showMoreUs").style.display = "none";
-      }
-    });
+    apiapp
+      .getUsers(url)
+      .then((res) => {
+        const users = res.data.users;
+        users.map((item) =>
+          item.photo.split(".").reverse()[0] === "png"
+            ? (item.photo = photosvg)
+            : item.photo
+        );
+        const nextlink = res.data.links.next_url;
+        this.setState({ users, nextlink });
+        if (nextlink === null) {
+          document.getElementById("showMoreUs").style.display = "none";
+        }
+      })
+      .catch((error) => {
+        console.log("error" + error);
+      });
   }
+
   //When the page is rendered, update the users
   componentDidMount() {
     this.refreshPage(this.state.defoultUrl);
@@ -66,7 +78,13 @@ class Wrappost extends React.Component {
     formData.append("name", this.state.name);
     formData.append("email", this.state.email);
     formData.append("phone", this.state.phone);
+
     formData.append("photo", fileField.files[0]);
+    
+    if(fileField.value == ""){
+      fileField.parentNode.classList.add("error");
+      return
+    }
 
     apiapp
       .postUser(formData, this.props.token)
@@ -74,8 +92,11 @@ class Wrappost extends React.Component {
         this.refreshPage(this.state.defoultUrl);
       })
       .catch((error) => {
-        console.log("error" + error);
+        if (error == "409") {
+          alert("User with this phone or email already exist");
+        }
       });
+
     //Clean the form
     this.setState({ name: "", email: "", phone: "", checkedPos: "" });
     document.getElementById("formpost").reset();
@@ -93,9 +114,8 @@ class Wrappost extends React.Component {
     const upload = document.getElementById("upload");
     const label = document.getElementById("label");
     let valueForm = document.getElementById("file").value;
-
     fileNameField.placeholder = img.name;
-
+  
     const imgUrl = URL.createObjectURL(img);
     const imgObj = new Image();
     imgObj.src = imgUrl;
@@ -103,6 +123,13 @@ class Wrappost extends React.Component {
       errorSpan.classList.remove("error");
       upload.classList.remove("error");
       errorSpan.textContent = "";
+      if (img.name === "") {
+        upload.classList.add("error");
+        errorSpan.classList.add("error");
+        errorSpan.textContent = "Upload the photo";
+        console.log("ggwp");
+        return;
+      }
       if (imgObj.width < 70 && imgObj.height < 70) {
         upload.classList.add("error");
         errorSpan.classList.add("error");
@@ -213,7 +240,6 @@ class Wrappost extends React.Component {
 
                 <div id="upload" className="upload d-flex">
                   <input
-                    required
                     type="file"
                     id="file"
                     name="file"

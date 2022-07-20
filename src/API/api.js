@@ -22,6 +22,11 @@ export const apiapp = {
       "https://frontend-test-assignment-api.abz.agency/api/v1/users",
       { method: "POST", body: formData, headers: { Token: token } }
     ).then( (response)=> {
+      if (!response.ok) {
+        // get error message from body or default to response status
+        const error =  response.status;
+        return Promise.reject(error);
+    }
       return response.json();
     });
   },
