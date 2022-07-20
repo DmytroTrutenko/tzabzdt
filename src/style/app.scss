@@ -377,7 +377,33 @@ label {
 }
 
 
+@media screen and (max-width: 425px) {
+    .header_inner {
+        padding: 0 16px;
+    }
 
+    .main-screen_inner .info {
+        padding: 40px 16px;
+        justify-content: flex-start;
+    }
+
+    .users {
+        padding: 0 25px;
+    }
+
+    h2 {
+        padding: 0 16px;
+    }
+
+    .user {
+        margin: 0 0 20px;
+        width: 100%;
+    }
+
+    .form_inner {
+        padding: 0 16px;
+    }
+}
 
 @media screen and (max-width: 360px) {
     .header_inner {
